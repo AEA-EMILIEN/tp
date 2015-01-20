@@ -1,14 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .util import *
+
+'''
+module Algorithmes
+==================
+
+
+
+Modules contenant nos implémentations des algorithmes de recherche de motifs dans une chaine.
+'''
+
+import util 
 
 
 
 def brute_force(motif,chaine_adn):
     '''
     algorithme de recherche de motif en brute force
-    @param string,string , le motif et la chaine dans laquelle chercher
+    :param motif: le motif qu'on veut retrouver dans la chaine
+    :param chaine_adn: la chaine dans laquelle on fait la recherche de motif
+    :type motif: string
+    :type chaine_adn: string
+    
+    :Exemple:
+    
+    >>> brute_force('AT','ATTTTATATTTA')
+    3
+
+
+    .. seealso:: boyer_moore()
+
     '''
     occ = 0 
     for c1 in xrange(0,len(chaine_adn)-len(motif)+1):  
@@ -54,9 +76,9 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     si aucune fonction n'est precise, brute force est utilise
     '''
     occ_motif = func(motif,chaine_adn)
-    occ_inv   = func(inverse(motif),chaine_adn)
-    occ_comp  = func(complement(motif),chaine_adn)
-    occ_comp_inv = func(complement_inverse(motif),chaine_adn)
+    occ_inv   = func(util.inverse(motif),chaine_adn)
+    occ_comp  = func(util.complement(motif),chaine_adn)
+    occ_comp_inv = func(util.complement_inverse(motif),chaine_adn)
     
     return occ_motif + occ_inv + occ_comp + occ_comp_inv
     
@@ -84,7 +106,7 @@ def boyer_moore(motif, chaine_adn) :
 def apprentissage_boyer_moore(motif) : 
 	list_key = []
 	list_value = []
-	fitom = inverse(motif) 
+	fitom = util.inverse(motif) 
 	for m in fitom[1:]: # tester avec ou sans slice operator
 		if (m not in list_key and m != fitom[0]):
 			list_key.append(m)
@@ -101,3 +123,9 @@ def compare_boyer_moore(motif, chaine_adn, cpt) :
 		else :
 			return False,cpt-i
 	return True,cpt-i+1
+
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

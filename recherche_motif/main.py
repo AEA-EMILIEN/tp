@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from . import algorithmes as algo
-from .util import * 
-
+import algorithmes as algo
+import util 
 
 
 adn = "GATACATTCATAGCTATGTGATACAGTATC"    
@@ -19,6 +18,10 @@ if __name__ == "__main__" :
     #print cherche_brute_force(m,adn)
     #print cherche_generique(m,adn)
     #print cherche_rabin_karp(m,adn)
-    print algo.apprentissage_boyer_moore(m) 
-    occ,indice_occ = algo.boyer_moore(m,adn)
-    print occ, indice_occ
+    #print algo.apprentissage_boyer_moore(m) 
+    #occ,indice_occ = algo.boyer_moore(m,adn)
+    #print occ, indice_occ
+
+    adn = util.open_fasta('test.fasta')
+    occ = algo.brute_force(m,adn+adn+adn+adn+adn)
+    print occ
