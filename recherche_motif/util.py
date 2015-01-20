@@ -109,7 +109,7 @@ def open_fasta (filename):
     
     :Example:
     
-    >>> open_fasta('test.fasta')
+    >>> open_fasta('test_doc.fasta')
     'AATTCCGG'
     
     .. seealso::
@@ -125,10 +125,43 @@ def open_fasta (filename):
         res+=x.strip('\n')
     return res
 
-def generate_fasta(filename):
+#ATTENTION commence a ramer audela de taille 10^7
+def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fasta pour tester les algorithmes implementés \n'''):
     '''
+    Génére un fichier fasta
+    
+    :param [filename]: Nom du fichier dans lequel écrire.
+    :param [taille]: Nombre de charactère dans la chaine fasta.
+                   (en pratique, si cette valeur est >10^7,
+                    la fonction commence à être longue)
+    :param [desc]: Une description pour la première ligne 
+                   du fichier
+    :type [filename]: file
+    :type [taille]: int
+    :type [desc]: string
+ 
+    :Exemple:
+    
+    >>> generate_fasta()
+    
+    
+    .. seealso:: open_fasta()
+    .. warning:: restreindre l'ordre de grandeur de taille pour
+                 ne pas avoir le programme bloqué trop longtemps
+    
     '''
 
+    sample = ['A','T','G','C','\n']
+
+    import random as r
+    data = [r.choice(sample) for _ in xrange(taille) ]
+    data = desc + "".join(data)
+
+    with open(filename,"w") as f:
+        f.write(data)
+        f.closed
+    
+    return None
 
 
 if __name__ == "__main__":
