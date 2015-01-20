@@ -1,0 +1,15 @@
+Rouse Julien
+Allart Emilie
+Duthoit Julien
+
+v1 - Boyer-Moore - 20/01/15
+
+implémentation de boyer-moore, de la brute force, des modification des motifs
+
+TODO: 
+	test de performance
+	tests
+	documentation  
+	generate_fasta
+	calcul de complexité
+	optimiser en ajoutant algo? 
