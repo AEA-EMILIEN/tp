@@ -9,6 +9,8 @@ Contient les fonctions utiles à toutes les fonctions de recherches ou
 à la lecture des fichiers fasta
 '''
 
+#marqueur pour savoir si on a déja load random dans generate_fasta
+RANDOM = None 
 
 #dictionnaire non exhaustif des complements pour des 
 #bases azotees.
@@ -107,12 +109,9 @@ def open_fasta (filename):
     :return: Une chaine de caractère contenant les données du fichier fasta
     :rtype: string
     
-    :Example:
     
-    >>> open_fasta('test_doc.fasta')
-    'AATTCCGG'
     
-    .. seealso::
+    .. seealso:: generate_fasta()
     .. warning:: ne traite pas les fichiers fasta multi-séquences
     '''
     with open(filename,'r') as fasta:
@@ -120,9 +119,10 @@ def open_fasta (filename):
         tab = fasta.readlines()
 
     fasta.closed
-    res=""
+    #res = ''
     for x in tab :
-        res+=x.strip('\n')
+        x.strip('\n')
+    res = "".join(tab) #tentative d'optimisation, ça n'a pas l'air d'impacter grand chose
     return res
 
 #ATTENTION commence a ramer audela de taille 10^7
@@ -154,8 +154,10 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     '''
 
     sample = ['A','T','G','C','\n']
-
-    import random as r
+    global RANDOM
+    if RANDOM is None:
+        import random as r
+        RANDOM = True
     data = [r.choice(sample) for _ in xrange(taille) ]
     data =  desc + "".join(data)
 

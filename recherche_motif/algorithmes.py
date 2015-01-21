@@ -17,11 +17,13 @@ import util
 
 def brute_force(motif,chaine_adn):
     '''
-    algorithme de recherche de motif en brute force
-    :param motif: le motif qu'on veut retrouver dans la chaine
-    :param chaine_adn: la chaine dans laquelle on fait la recherche de motif
+    Algorithme de recherche de motif en brute force
+    
+    :param motif: Le motif qu'on veut retrouver dans la chaine.
+    :param chaine_adn: La chaine dans laquelle on fait la recherche de motif.
     :type motif: string
     :type chaine_adn: string
+    :return: Le nombre d'occurence du motif.
     
     :Exemple:
     
@@ -42,7 +44,7 @@ def brute_force(motif,chaine_adn):
             else :
                 if (c2==len_motif-1):
                     occ+=1
-    return occ
+    return occ,[]
 
 
 
@@ -77,12 +79,14 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     dans une chaine avec une fonction passe en parametre.
     si aucune fonction n'est precise, brute force est utilise
     '''
-    occ_motif = func(motif,chaine_adn)
-    occ_inv   = func(util.inverse(motif),chaine_adn)
-    occ_comp  = func(util.complement(motif),chaine_adn)
-    occ_comp_inv = func(util.complement_inverse(motif),chaine_adn)
+    occ_motif,_ = func(motif,chaine_adn)
+    occ_inv,_   = func(util.inverse(motif),chaine_adn)
+    occ_comp,_  = func(util.complement(motif),chaine_adn)
+    occ_comp_inv,_ = func(util.complement_inverse(motif),chaine_adn)
     
-    return occ_motif + occ_inv + occ_comp + occ_comp_inv
+    occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
+    indice_occ = []
+    return occ, indice_occ
     
 def boyer_moore(motif, chaine_adn) :
     '''
@@ -137,7 +141,7 @@ def compare_boyer_moore(motif, chaine_adn, cpt) :
     i = 0
     size = len(motif)-1
     while (i <= size) :
-        print motif[size-i], chaine_adn[cpt-i]
+        #print motif[size-i], chaine_adn[cpt-i]
         if (motif[size-i] == chaine_adn[cpt-i]) :
 	       	i += 1
         else :

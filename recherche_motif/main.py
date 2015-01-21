@@ -24,21 +24,30 @@ m = 'GATACA'
 '''
 def main(argv):
     #les algos que l'utilisateur peut demander d'utiliser
-    algos = ["boyer_moore","brute_force"] 
-    algo_choisi = "brute_force"
+    algos = {"boyer-moore":algo.boyer_moore,
+             "brute_force":algo.brute_force} 
+    algo_choisi = algo.brute_force
     #fichier fasta à utiliser
     inputfile = 'test10millions.fasta'
     #si fichier fasta non spécifié
-    outputfile = 'out.fasta' 
+    outputfile = '' 
     #si output file spécifié, nombre de char à généré
     taille = 1000000
-    
    
+    motif = "GATACA"
+    chaine_adn = '' 
 
     #chaine d'usage a afficher qd l'utilisateur se trompe/demande l'aide
-    usage = sys.argv[0]+''' -l : Affiche la liste des algos utilisables \n'''+sys.argv[0]+''' -i <inputfile> -o <outputfile> -a <algorithme>'''
+    usage = sys.argv[0]+''' -l : Affiche la liste des algos utilisables \n'''+sys.argv[0]+''' -i <inputfile> -o <outputfile> -a <algorithme> -m <motif>'''
+   
+    
+    ###################################################
+    #traitement des arguments d'appel du script#
+    ###################################################
+   
+    
     try:
-        opts, args = getopt.getopt(argv,"lhi:o:a:t:",["ifile=","ofile=","listeAlgo=","algo="])
+        opts, args = getopt.getopt(argv,"lhi:o:a:t:m:",["ifile=","ofile=","listeAlgo=","algo=","motif=","taille="])
     except getopt.GetoptError:
         print usage
         sys.exit(2)
@@ -58,8 +67,21 @@ def main(argv):
             if arg not in algos:
                 print "erreur d'algorithme, -l pour voir la liste des algorithmes implémentés"
             else:
-                algo_choisi = arg
+                algo_choisi = algos[arg]
+        elif opt in ("-m","--motif"):
+            motif = arg
+        elif opt in ("-t","--taille"):
+            taille = int(arg)
+    ####################################################
+    #fin du traitement des arguments d'appel du script#
+    ###################################################
+    if (outputfile!=''):
+        util.generate_fasta(outputfile,taille)
+        inputfile=outputfile
+    chaine_adn = util.open_fasta(inputfile)
+    
         
-        
+    occ,indice_occ = algo.cherche_generique(motif,chaine_adn,algo_choisi)
+    print occ,indice_occ    
 if __name__ == "__main__":
     main(sys.argv[1:])
