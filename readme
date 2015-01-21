@@ -7,6 +7,14 @@ v1 - Brute-force   20/01/15
 
 implémentation de boyer-moore, de la brute force, des modification des motifs
 
+
+Profiling: python -m cProfile monfichier.py arg1 arg2
+
+Test a la fac:
+brute_force m='GATACA' dans 1e8char : +-9sec
+brute_force m='GATACA' dans 1e7char : 0.316sec
+
+
 TODO: 
 	test de performance
 	tests
