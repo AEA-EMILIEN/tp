@@ -119,10 +119,9 @@ def open_fasta (filename):
         tab = fasta.readlines()
 
     fasta.closed
-    #res = ''
+    res = ''
     for x in tab :
-        x.strip('\n')
-    res = "".join(tab) #tentative d'optimisation, ça n'a pas l'air d'impacter grand chose
+        res+= x.strip('\n')
     return res
 
 #ATTENTION commence a ramer audela de taille 10^7
