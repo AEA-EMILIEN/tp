@@ -2,7 +2,7 @@ Rousé Julien
 Allart Emilie
 Duthoit Julien
 
-v1 - Boyer-Moore - 20/01/15
+v1 - Boyer-Moore - 20/01/15 BUG
 v1 - Brute-force   20/01/15
 
 implémentation de boyer-moore, de la brute force, des modification des motifs
@@ -11,8 +11,13 @@ implémentation de boyer-moore, de la brute force, des modification des motifs
 Profiling: python -m cProfile monfichier.py arg1 arg2
 
 Test a la fac:
+brute_force m='AA' dans 1e8 : +-9sec
 brute_force m='GATACA' dans 1e8char : +-9sec
 brute_force m='GATACA' dans 1e7char : 0.316sec
+
+boyer_moore m='AA' dans 1e8char : +-28sec
+boyer_moore m='AAAAAA' dans 1e8char : +-9sec
+boyer_moore m='AAAAAAAAAAAAAA' dans 1e8char : +-4.3sec
 
 
 TODO: 
