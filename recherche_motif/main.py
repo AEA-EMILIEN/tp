@@ -23,20 +23,28 @@ m = 'GATACA'
         print occ
 '''
 def main(argv):
-    algos = ["boyer_moore","brute_force"]
-    inputfile = ''
+    #les algos que l'utilisateur peut demander d'utiliser
+    algos = ["boyer_moore","brute_force"] 
+    algo_choisi = "brute_force"
+    #fichier fasta à utiliser
+    inputfile = 'test10millions.fasta'
+    #si fichier fasta non spécifié
+    outputfile = 'out.fasta' 
+    #si output file spécifié, nombre de char à généré
     taille = 1000000
-    outputfile = ''
+    
    
+
+    #chaine d'usage a afficher qd l'utilisateur se trompe/demande l'aide
+    usage = sys.argv[0]+''' -l : Affiche la liste des algos utilisables \n'''+sys.argv[0]+''' -i <inputfile> -o <outputfile> -a <algorithme>'''
     try:
-        opts, args = getopt.getopt(argv,"lhi:o:",["ifile=","ofile="])
+        opts, args = getopt.getopt(argv,"lhi:o:a:t:",["ifile=","ofile=","listeAlgo=","algo="])
     except getopt.GetoptError:
-        print sys.argv[0]+' -i <inputfile> -o <outputfile>'
+        print usage
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print sys.argv[0]+' -l : Affiche la liste des algos utilisables'  
-            print sys.argv[0]+' -i <inputfile> -o <outputfile> -a <algorithme>'
+            print usage
             sys.exit()
         elif opt in ("-i", "--ifile"):
             inputfile = arg
@@ -45,6 +53,13 @@ def main(argv):
         elif opt in ("-l", "--listeAlgo"):
             for a in algos:
                 print a
-
+            sys.exit(2)
+        elif opt in ("-a","--algo"):
+            if arg not in algos:
+                print "erreur d'algorithme, -l pour voir la liste des algorithmes implémentés"
+            else:
+                algo_choisi = arg
+        
+        
 if __name__ == "__main__":
     main(sys.argv[1:])
