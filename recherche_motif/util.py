@@ -143,6 +143,8 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     :Exemple:
     
     >>> generate_fasta()
+
+    >>> generate_fasta('test10millions.fasta',taille=10000000)
     
     
     .. seealso:: open_fasta()
@@ -155,7 +157,7 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
 
     import random as r
     data = [r.choice(sample) for _ in xrange(taille) ]
-    data = desc + "".join(data)
+    data =  desc + "".join(data)
 
     with open(filename,"w") as f:
         f.write(data)

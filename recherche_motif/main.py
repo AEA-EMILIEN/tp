@@ -12,16 +12,13 @@ m = 'GATACA'
 
 if __name__ == "__main__" :
     
-    #print inverse(m)
-    #print complement(m,complement_dic)
-    #print complement_inverse(m,complement_dic)
-    #print cherche_brute_force(m,adn)
-    #print cherche_generique(m,adn)
-    #print cherche_rabin_karp(m,adn)
-    #print algo.apprentissage_boyer_moore(m) 
-    #occ,indice_occ = algo.boyer_moore(m,adn)
-    #print occ, indice_occ
-
-    adn = util.open_fasta('test.fasta')
-    occ = algo.brute_force(m,adn+adn+adn+adn+adn)
-    print occ
+    narg = len(sys.argv) #nombre d'argument sur la ligne de commande
+    if (narg<2): #0arg supplementaire
+        adn = util.open_fasta('test.fasta')
+        occ = algo.brute_force(m,adn)
+        print occ
+    if (narg==2) :
+        filename = sys.argv[1]
+        adn = util.open_fasta(filename)
+        occ = algo.cherche_generique(m,adn)
+        print occ
