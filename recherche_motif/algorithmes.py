@@ -55,7 +55,10 @@ def hachage_rabin_karp(motif):
     #effectue un hachage defini par l'algorithme de rabin-karp sur un motif passe en parametre
 	
     base_azotee = { 'A':1 , 'C':2 , 'G':3 , 'T':4 }
-    return sum([base_azotee[c] for c in motif])	
+    chaine_hache = [base_azotee[c] for c in motif]
+    for i in xrange(0,len(motif)):
+        chaine_hache[i]= (i+1)*chaine_hache[i]
+    return sum(chaine_hache)
 	
 def rabin_karp(motif,chaine_adn):
 	
@@ -63,12 +66,16 @@ def rabin_karp(motif,chaine_adn):
     #@param string,string le motif et la chaine dans laquelle on cherche ce motif
 	
     occ = 0
+    len_chaine_adn = len(chaine_adn)
     hachage_motif = hachage_rabin_karp(motif)
-    chaine_hachage = range(0,len(chaine_adn)+1)
-	
-    for i in xrange(0,len(chaine_adn)-len(motif)+1):
-        chaine_hachage[i] = hachage_rabin_karp(chaine_adn[i:len(motif)])
-        if (chaine_hachage[i]==hachage_motif):
+    chaine_hachage = range(0,len_chaine_adn+1)
+    len_motif = len(motif)
+    
+    for i in xrange(0,len_chaine_adn-len_motif+1):
+        #print chaine_adn[i:i+len_motif]
+        chaine_hachage[i] = hachage_rabin_karp(chaine_adn[i:i+len_motif])
+        if (chaine_hachage[i]==hachage_motif and
+            chaine_adn[i:i+len_motif]==motif):
             occ+=1
 	
     return occ,chaine_hachage 

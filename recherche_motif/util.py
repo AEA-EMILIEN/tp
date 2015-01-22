@@ -9,8 +9,6 @@ Contient les fonctions utiles à toutes les fonctions de recherches ou
 à la lecture des fichiers fasta
 '''
 
-#marqueur pour savoir si on a déja load random dans generate_fasta
-RANDOM = None 
 
 #dictionnaire non exhaustif des complements pour des 
 #bases azotees.
@@ -153,10 +151,8 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     '''
 
     sample = ['A','T','G','C','\n']
-    global RANDOM
-    if RANDOM is None:
-        import random as r
-        RANDOM = True
+    
+    import random as r
     data = [r.choice(sample) for _ in xrange(taille) ]
     data =  desc + "".join(data)
 
