@@ -3,7 +3,8 @@ Allart Emilie
 Duthoit Julien
 
 v1 - Boyer-Moore - 20/01/15 BUG
-v1 - Brute-force   20/01/15
+v2 - Brute-force   22/01/15
+v1 - Rabin-Karp    23/01/15 
 
 implémentation de boyer-moore, de la brute force, des modification des motifs
 
@@ -20,10 +21,17 @@ boyer_moore m='AAAAAA' dans 1e8char : +-9sec
 boyer_moore m='AAAAAAAAAAAAAA' dans 1e8char : +-4.3sec
 
 
+
+
+Test maison JulienR:
+rabin_karp m='GATACA' dans 1e7char : +-8sec 
+rabin_karp m='GATACA' dans 1e8char : +-75sec 
+
+
+
 TODO: 
 	test de performance
 	tests
 	documentation  
-	generate_fasta
 	calcul de complexité
 	optimiser en ajoutant algo? 

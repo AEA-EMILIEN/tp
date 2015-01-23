@@ -50,9 +50,29 @@ def brute_force(motif,chaine_adn):
 
 
 
-def hachage_rabin_karp(motif):
-	
-    #effectue un hachage defini par l'algorithme de rabin-karp sur un motif passe en parametre
+def hachage_rabin_karp(motif):	
+    '''
+    Effectue un hachage sur un motif passé en paramêtre.
+    
+    :param motif: Le motif que l'on veut haché.
+    :type motif: string
+    :return: La valeur du hachage du motif
+    :rtype: int
+    
+    
+    :Example:
+    
+    >>> hachage_rabin_karp('GA')
+    5
+    
+    >>> hachage_rabin_karp('CT')
+    10
+    
+    .. seealso::
+    .. warning:: Ne fonctionne qu'avec les caractères A,C,T et G
+    .. note:: Voir si une autre fonction de hachage ne serait pas plus performante
+    
+    '''
 	
     base_azotee = { 'A':1 , 'C':2 , 'G':3 , 'T':4 }
     chaine_hache = [base_azotee[c] for c in motif]
@@ -61,24 +81,48 @@ def hachage_rabin_karp(motif):
     return sum(chaine_hache)
 	
 def rabin_karp(motif,chaine_adn):
-	
-    #recherche de motif avec l'algorithme de rabin_karp
-    #@param string,string le motif et la chaine dans laquelle on cherche ce motif
-	
+    '''
+    recherche de motif avec l'algorithme de rabin_karp
+   
+    :param motif: Le motif à trouver dans la chaine_adn
+    :param chaine_adn: Chaine de caractère representant un séquence d'AA
+    :type motif: string
+    :type chaine_adn: string
+    :return: nombre d'occurence du motif dans la chaine,
+             les indices de ces occurences dans la chaine
+    :rtype: int,[int]
+    
+    :Exemple:
+    
+    >>> rabin_karp('GA', 'GATACA')
+    (1, [0])
+    
+    >>> rabin_karp('GATACA', 'TAGATACATAGATAGATACA')
+    (2, [2, 14])
+    
+    .. seealso::
+    .. warning::
+    .. notes ::
+
+    '''
     occ = 0
     len_chaine_adn = len(chaine_adn)
+    #hache = hachage_rabin_karp
     hachage_motif = hachage_rabin_karp(motif)
     chaine_hachage = range(0,len_chaine_adn+1)
     len_motif = len(motif)
+    indice_occ = []
     
+
     for i in xrange(0,len_chaine_adn-len_motif+1):
-        #print chaine_adn[i:i+len_motif]
+        #print i
         chaine_hachage[i] = hachage_rabin_karp(chaine_adn[i:i+len_motif])
         if (chaine_hachage[i]==hachage_motif and
             chaine_adn[i:i+len_motif]==motif):
             occ+=1
+            indice_occ.append(i)
 	
-    return occ,chaine_hachage 
+    return occ,indice_occ
 
 def cherche_generique(motif,chaine_adn,func=brute_force):
     '''
@@ -135,10 +179,23 @@ def boyer_moore(motif, chaine_adn) :
 
 
 def apprentissage_boyer_moore(motif) : 
+    '''
+    Création de la table de saut pour le motif
+    
+    :param motif: Le motif pour lequel une table de saut va être créé
+    :type motif: string
+    :return: Un dictionnaire contenant la table des saut du motif
+    :rtype: dic char->int
+    
+    :Exemple:
+    
+    #TODO
+    
+    '''
     list_key = []
     list_value = []
     fitom = util.inverse(motif) 
-    for m in fitom[1:]: # tester avec ou sans slice operator
+    for m in fitom[1:]:
         if (m not in list_key and m != fitom[0]):
             list_key.append(m)
             list_value.append(fitom.index(m))
