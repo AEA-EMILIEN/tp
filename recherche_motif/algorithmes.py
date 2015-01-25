@@ -28,7 +28,7 @@ def brute_force(motif,chaine_adn):
     :Exemple:
     
     >>> brute_force('AT','ATTTTATATTTA')
-    3
+    (3, [0, 5, 7])
 
 
     .. seealso:: boyer_moore()
@@ -37,6 +37,7 @@ def brute_force(motif,chaine_adn):
     occ = 0 
     len_chaine_adn = len(chaine_adn) 
     len_motif = len(motif)
+    indice_occ = []
     for c1 in xrange(0,len_chaine_adn-len_motif+1):  
         for c2 in xrange(0,len_motif):
             if (chaine_adn[c1+c2]!=motif[c2]):
@@ -44,7 +45,8 @@ def brute_force(motif,chaine_adn):
             else :
                 if (c2==len_motif-1):
                     occ+=1
-    return occ,[]
+                    indice_occ.append(c1)
+    return occ,indice_occ
 
 
 
@@ -114,7 +116,6 @@ def rabin_karp(motif,chaine_adn):
     
 
     for i in xrange(0,len_chaine_adn-len_motif+1):
-        #print i
         chaine_hachage[i] = hachage_rabin_karp(chaine_adn[i:i+len_motif])
         if (chaine_hachage[i]==hachage_motif and
             chaine_adn[i:i+len_motif]==motif):
@@ -125,18 +126,19 @@ def rabin_karp(motif,chaine_adn):
 
 def cherche_generique(motif,chaine_adn,func=brute_force):
     '''
-    fait une recherche de motif,inverse,complement,complement-inverse
+    Fait une recherche de motif,inverse,complement,complement-inverse
     dans une chaine avec une fonction passe en parametre.
-    si aucune fonction n'est precise, brute force est utilise
+    Si aucune fonction n'est précisé, brute force est utilisé.
+ 
     '''
-    occ_motif,_ = func(motif,chaine_adn)
-    occ_inv,_   = func(util.inverse(motif),chaine_adn)
-    occ_comp,_  = func(util.complement(motif),chaine_adn)
-    occ_comp_inv,_ = func(util.complement_inverse(motif),chaine_adn)
+    occ_motif,indice_motif = func(motif,chaine_adn)
+    occ_inv,indice_inv   = func(util.inverse(motif),chaine_adn)
+    occ_comp,indice_comp  = func(util.complement(motif),chaine_adn)
+    occ_comp_inv,indice_comp_inv = func(util.complement_inverse(motif),chaine_adn)
     
     occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
-    indice_occ = []
-    return occ, indice_occ
+    indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
+    return occ, sorted(indice_occ)
     
 def boyer_moore(motif, chaine_adn) :
     '''
@@ -152,8 +154,8 @@ def boyer_moore(motif, chaine_adn) :
 
     :Exemple:
     
-    >>> boyer_moore("GATACA","GATACAACACATACAGATACATATAG")
-    2
+    >>> boyer_moore("GATACA","GATACAGATACA")
+    (2, [0, 6])
     
     .. seealso:: brute_force()
     .. note:: Boyer-Moore est plus performant sur des long motifs et/ou sur des 
@@ -201,6 +203,28 @@ def apprentissage_boyer_moore(motif) :
     return dict(zip(list_key, list_value))		
 
 def compare_boyer_moore(motif, chaine_adn, cpt) :
+    '''
+    Comparaison entre deux string, utilisé dans l'algo de boyer-moore.
+    
+    :param motif: Le motif qu'on va comparer.
+    :param chaine_adn: La chaine dans laquelle on va comparer le motif.
+    :param cpt: L'indice a partir du quel on commence la comparaison dans la chaine_adn.
+    :type motif: string
+    :type chaine_adn: string
+    :type cpt: int
+    :return: Un boolean indiquant si les deux chaines sont identiques, 
+             et l'indice auquel la comparaison s'est arreté.
+    :rtype: bool,int
+    
+    :Example:
+    
+    >>> compare_boyer_moore('GA','GA',1)
+    (True, 0)
+    
+    >>> compare_boyer_moore('GATA','CGTA',3)
+    (False, 1)
+    
+    '''
     i = 0
     size = len(motif)-1
     while (i <= size) :
