@@ -107,7 +107,6 @@ def rabin_karp(motif,chaine_adn):
     '''
     occ = 0
     len_chaine_adn = len(chaine_adn)
-    #hache = hachage_rabin_karp
     hachage_motif = hachage_rabin_karp(motif)
     chaine_hachage = range(0,len_chaine_adn+1)
     len_motif = len(motif)
