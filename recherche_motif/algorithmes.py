@@ -138,12 +138,12 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     
     occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
-    return occ, sorted(indice_occ)
+    return occ, []#sorted(indice_occ)
     
 def boyer_moore(motif, chaine_adn) :
     '''
     Implémentation de l'algorithme de Boyer-Moore
-    
+   
     :param motif: Le motif à trouver dans la chaine_adn
     :param chaine_adn: Chaine de caractère representant un séquence d'AA
     :type motif: string
@@ -235,6 +235,100 @@ def compare_boyer_moore(motif, chaine_adn, cpt) :
             return False,cpt-i
     return True,cpt-i+1
 
+
+def kmp(motif,chaine_adn):
+    '''
+    Knuth-Morris-Prat algorithme.
+    
+    :param motif: Le motif à trouver dans la chaine_adn
+    :param chaine_adn: Chaine de caractère representant un séquence d'AA
+    :type motif: string
+    :type chaine_adn: string
+    :return: nombre d'occurence du motif dans la chaine,
+             les indices de ces occurences dans la chaine
+    :rtype: int,[int]
+
+    :Exemple:
+    
+    >>> kmp('ABCAB','ABCA AB ABCAB')
+    (1, [8])
+    
+    
+    
+    ..seealso:: boyer_moore(),brute_force(), rabin_karp()
+    
+    '''
+    len_chaine_adn = len(chaine_adn)
+    len_motif = len(motif)
+    #debut du match courant
+    m = 0
+    #indice du caractere courant ds motif
+    i = 0 
+    #LA table
+    tab = prepare_table_kmp(motif)
+    
+    occ = 0
+    indice_occ = []
+    
+    while(m+i<len_chaine_adn):
+        if (motif[i] == chaine_adn[m + i]):
+            if (i == len_motif - 1 ):
+                occ +=1
+                indice_occ.append(m)
+                i = 0
+                m += 1
+            else :
+                i += 1
+        else:
+            if (tab[i] > -1):
+                m += i - tab[i]
+                i = tab[i]
+            else:
+                i = 0
+                m += 1
+                
+    return occ,indice_occ
+
+
+def prepare_table_kmp(motif):
+    '''
+    Rempli la table utilisé par l'algorithme KMP
+    
+    :param motif: Le motif à prétraiter
+    :type motif: string
+    :return: Une liste résultant du traitement du motif, en conformité avec l'algo KMP
+    :rtype: int[]
+    
+    :Exemple:
+    
+    
+    '''
+    len_motif = len(motif)
+    #la position a calculé dans le tableau
+    pos = 2
+    #index dans motif du prochain caractere, de la sous chaine actuelle
+    cnd = 0
+    
+    #le tableau des résultats
+    tab = [-2] * len_motif
+    tab[0] = -1
+    tab[1] = 0
+    
+    while( pos<len_motif):
+        #cas où la sous chaine continue
+        if (motif[pos-1] == motif[cnd]):
+            cnd +=1
+            tab[pos] = cnd
+            pos +=1
+        #cas ou la souschaine ne continue pas mais on peut revenir en arriere
+        elif (cnd>0):
+            cnd = tab[cnd]
+        #plus de candidat pour une souschaine (cnd==0)
+        else:
+            tab[pos] = 0
+            pos += 1
+    
+    return tab
 
 
 if __name__ == "__main__":

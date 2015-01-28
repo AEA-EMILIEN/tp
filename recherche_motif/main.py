@@ -24,9 +24,10 @@ m = 'GATACA'
 '''
 def main(argv):
     #les algos que l'utilisateur peut demander d'utiliser
-    algos = {"boyer-moore":algo.boyer_moore,
+    algos = {"boyer_moore":algo.boyer_moore,
              "brute_force":algo.brute_force,
-	     "rabin_karp":algo.rabin_karp} 
+	     "rabin_karp":algo.rabin_karp,
+             "kmp":algo.kmp} 
     
     algo_choisi = algo.brute_force
     #fichier fasta à utiliser
