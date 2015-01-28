@@ -9,6 +9,10 @@ v1 - Rabin-Karp    23/01/15
 implémentation de boyer-moore, de la brute force, des modification des motifs
 
 
+Pour générer du fasta:
+python util.py génére test.fasta 1e7 lignes, et test10millions.fasta 1e8 lignes,
+
+
 Profiling: python -m cProfile monfichier.py arg1 arg2
 
 Test a la fac:
