@@ -140,100 +140,65 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
     return occ, []#sorted(indice_occ)
     
-def boyer_moore(motif, chaine_adn) :
     '''
     Implémentation de l'algorithme de Boyer-Moore
    
-    :param motif: Le motif à trouver dans la chaine_adn
-    :param chaine_adn: Chaine de caractère representant un séquence d'AA
-    :type motif: string
-    :type chaine_adn: string
-    :return: nombre d'occurence du motif dans la chaine,
-             les indices de ces occurences dans la chaine
-    :rtype: int,[int]
+    '''
 
-    :Exemple:
-    
-    >>> boyer_moore("GATACA","GATACAGATACA")
-    (2, [0, 6])
-    
-    .. seealso:: brute_force()
-    .. note:: Boyer-Moore est plus performant sur des long motifs et/ou sur des 
-              alphabets étendus en théorie
-    '''
-    dico = apprentissage_boyer_moore(motif)
-    cpt = len(motif)-1
-    occ = 0
-    indice_occ = []
-    while (cpt < len(chaine_adn)) :
-        boolean, cpt = compare_boyer_moore(motif, chaine_adn, cpt) 
-        if (boolean) :
-            occ += 1
-            indice_occ.append(cpt)
-            cpt += len(motif)
-        else :
-            if (chaine_adn[cpt] in dico) :
-                    cpt += dico[chaine_adn[cpt]]
-            else :
-                cpt += len(motif)
-    return occ,indice_occ
+def generateBC(motif) :
+	size = len(motif)
+	listBC = {}
+	for i in range(0, size-1) :
+		listBC[motif[i]] = size-i-1
+	return listBC
 
+def generateGS(motif) :
+	size = len(motif)
+	listGS = {}
+	sub = ""
+	for i in range(0, size) :
+		listGS[len(sub)] = findSuffixPos(motif[size-i-1],sub,motif)
+		sub = motif[size-1-i] + sub
+	return listGS
 
-def apprentissage_boyer_moore(motif) : 
-    '''
-    Création de la table de saut pour le motif
-    
-    :param motif: Le motif pour lequel une table de saut va être créé
-    :type motif: string
-    :return: Un dictionnaire contenant la table des saut du motif
-    :rtype: dic char->int
-    
-    :Exemple:
-    
-    #TODO
-    
-    '''
-    list_key = []
-    list_value = []
-    fitom = util.inverse(motif) 
-    for m in fitom[1:]:
-        if (m not in list_key and m != fitom[0]):
-            list_key.append(m)
-            list_value.append(fitom.index(m))
-    return dict(zip(list_key, list_value))		
+def findSuffixPos(bc,suffix, motif) : 
+	for i in range(1,len(motif)+1)[::-1] :
+		find = True
+		for j in range(0,len(suffix)) :
+				end = i-len(suffix)-1+j
+				if (end<0 or suffix[j]==motif[end]) :
+					pass
+				else :
+					find = False
+		end = i-len(suffix)-1
+		if find and (end<=0 or motif[end-1]!=bc) :
+			return len(motif)-i+1
 
-def compare_boyer_moore(motif, chaine_adn, cpt) :
-    '''
-    Comparaison entre deux string, utilisé dans l'algo de boyer-moore.
-    
-    :param motif: Le motif qu'on va comparer.
-    :param chaine_adn: La chaine dans laquelle on va comparer le motif.
-    :param cpt: L'indice a partir du quel on commence la comparaison dans la chaine_adn.
-    :type motif: string
-    :type chaine_adn: string
-    :type cpt: int
-    :return: Un boolean indiquant si les deux chaines sont identiques, 
-             et l'indice auquel la comparaison s'est arreté.
-    :rtype: bool,int
-    
-    :Example:
-    
-    >>> compare_boyer_moore('GA','GA',1)
-    (True, 0)
-    
-    >>> compare_boyer_moore('GATA','CGTA',3)
-    (False, 1)
-    
-    '''
-    i = 0
-    size = len(motif)-1
-    while (i <= size) :
-        #print motif[size-i], chaine_adn[cpt-i]
-        if (motif[size-i] == chaine_adn[cpt-i]) :
-	       	i += 1
-        else :
-            return False,cpt-i
-    return True,cpt-i+1
+def BM(chaine, motif) :
+	GS = generateGS(motif)
+	BC = generateBC(motif)
+	indice_occ = []
+	nb_occ = 0
+	i=0
+	sizeC = len(chaine)
+	sizeM = len(motif)
+	while i<sizeC-sizeM+1 :
+		j = sizeM
+		while j>0 and motif[j-1]==chaine[i+j-1] :
+			j = j-1
+		if j>0 :
+			BCShift = BC.get(chaine[i+j-1], sizeM)
+			GSShift = GS[sizeM-j]
+			if BCShift > GSShift :
+				i = i + BCShift
+			else :
+				i = i + GSShift
+		else :
+			GSshift = GS[sizeM-1]
+			nb_occ = nb_occ + 1
+			indice_occ.append(i)
+			i = i + max(sizeM,GSshift)
+	return nb_occ, indice_occ
 
 
 def kmp(motif,chaine_adn):
