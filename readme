@@ -5,6 +5,7 @@ Duthoit Julien
 v1 - Boyer-Moore - 20/01/15 BUG
 v2 - Brute-force   22/01/15
 v1 - Rabin-Karp    23/01/15 
+v2 - Boyer-Moore - 29/01/15 juste revoir le décalage dans le cas motif trouvé
 
 implémentation de boyer-moore, de la brute force, des modification des motifs
 
