@@ -13,11 +13,15 @@ Contient les fonctions utiles à toutes les fonctions de recherches ou
 #dictionnaire non exhaustif des complements pour des 
 #bases azotees.
 #Contient les complements pour A,C,T et G
-complement_dic = {'A':'T',
+complement_dic_adn = {'A':'T',
     'T':'A',
     'G':'C',
     'C':'G'}
 
+complement_dic_arn = {'A':'U',
+    'U':'A',
+    'G':'C',
+    'C':'G'}
 
 def inverse(motif):
     '''
@@ -46,7 +50,7 @@ def inverse(motif):
     #slice operator 
     #http://stackoverflow.com/questions/931092/reverse-a-string-in-python
 
-def complement(motif,dic=complement_dic):
+def complement(motif,dic=complement_dic_adn):
     '''
     Remplace chaque lettre par son complément
 
