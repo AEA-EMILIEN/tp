@@ -138,7 +138,7 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     
     occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
-    return occ, []#sorted(indice_occ)
+    return occ, [] #sorted(indice_occ)
     
     '''
     Implémentation de l'algorithme de Boyer-Moore
@@ -174,7 +174,7 @@ def findSuffixPos(bc,suffix, motif) :
 		if find and (end<=0 or motif[end-1]!=bc) :
 			return len(motif)-i+1
 
-def boyer_moore(chaine, motif) :
+def boyer_moore(motif, chaine) :
 	GS = generateGS(motif)
 	BC = generateBC(motif)
 	indice_occ = []
@@ -188,11 +188,9 @@ def boyer_moore(chaine, motif) :
 			j = j-1
 		if j>0 :
 			if chaine[i+j-1] not in BC :
-				print i
 				i = i + j
-				print i
 			else :
-				BCShift = BC.get(chaine[i+j-1], sizeM)
+				BCShift = BC.get(chaine[i+j-1], sizeM)-(sizeM-j)
 				GSShift = GS[sizeM-j]
 				if BCShift > GSShift :
 					i = i + BCShift
