@@ -39,13 +39,9 @@ def brute_force(motif,chaine_adn):
     len_motif = len(motif)
     indice_occ = []
     for c1 in xrange(0,len_chaine_adn-len_motif+1):  
-        for c2 in xrange(0,len_motif):
-            if (chaine_adn[c1+c2]!=motif[c2]):
-                break
-            else :
-                if (c2==len_motif-1):
-                    occ+=1
-                    indice_occ.append(c1)
+        if (chaine_adn[c1:c1+len_motif] == motif):
+            occ+=1
+            indice_occ.append(c1)
     return occ,indice_occ
 
 
@@ -124,7 +120,7 @@ def rabin_karp(motif,chaine_adn):
 	
     return occ,indice_occ
 
-def cherche_generique(motif,chaine_adn,func=brute_force):
+def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic_adn):
     '''
     Fait une recherche de motif,inverse,complement,complement-inverse
     dans une chaine avec une fonction passe en parametre.
@@ -133,8 +129,8 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
     '''
     occ_motif,indice_motif = func(motif,chaine_adn)
     occ_inv,indice_inv   = func(util.inverse(motif),chaine_adn)
-    occ_comp,indice_comp  = func(util.complement(motif),chaine_adn)
-    occ_comp_inv,indice_comp_inv = func(util.complement_inverse(motif),chaine_adn)
+    occ_comp,indice_comp  = func(util.complement(motif,comp),chaine_adn)
+    occ_comp_inv,indice_comp_inv = func(util.complement_inverse(motif,comp),chaine_adn)
     
     occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv

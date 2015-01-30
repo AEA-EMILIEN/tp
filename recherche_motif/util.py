@@ -75,7 +75,7 @@ def complement(motif,dic=complement_dic_adn):
     return "".join([dic[c] for c in motif]) 
     #construit une liste des complements de motif, puis la cast en string
     
-def complement_inverse(motif,dic=complement_dic):
+def complement_inverse(motif,dic=complement_dic_adn):
     '''
     Remplace chaque lettre du motif par son inverse, puis par le complément 
     du nouveau motif obtenu.

@@ -30,6 +30,13 @@ def main(argv):
              "kmp":algo.kmp} 
     
     algo_choisi = algo.brute_force
+    
+    #les complements a utiliser, en fonction qu'on lit de l'ARN, de l'ADN
+    comp = {"adn":util.complement_dic_adn,
+            "arn":util.complement_dic_arn}
+    
+    comp_choisi = util.complement_dic_adn
+    
     #fichier fasta à utiliser
     inputfile = 'test10millions.fasta'
     #si fichier fasta non spécifié
@@ -50,7 +57,7 @@ def main(argv):
    
     
     try:
-        opts, args = getopt.getopt(argv,"lhi:o:a:t:m:",["ifile=","ofile=","listeAlgo=","algo=","motif=","taille="])
+        opts, args = getopt.getopt(argv,"lhi:o:a:t:m:c:",["ifile=","ofile=","listeAlgo=","algo=","motif=","taille=","complement_dic="])
     except getopt.GetoptError:
         print usage
         sys.exit(2)
@@ -75,6 +82,8 @@ def main(argv):
             motif = arg
         elif opt in ("-t","--taille"):
             taille = int(arg)
+        elif opt in ("-c","--complement_dic"):
+            comp_choisi = comp.get(arg,util.complement_dic_adn)
     ####################################################
     #fin du traitement des arguments d'appel du script#
     ###################################################
@@ -84,7 +93,7 @@ def main(argv):
     chaine_adn = util.open_fasta(inputfile)
     
         
-    occ,indice_occ = algo.cherche_generique(motif,chaine_adn,algo_choisi)
+    occ,indice_occ = algo.cherche_generique(motif,chaine_adn,algo_choisi,comp_choisi)
     print occ,indice_occ    
 if __name__ == "__main__":
     main(sys.argv[1:])
