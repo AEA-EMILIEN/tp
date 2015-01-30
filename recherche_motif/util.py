@@ -162,6 +162,9 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     
     return None
 
+def diff(a, b):
+	#b = set(b)
+       return [aa for aa in a if aa not in b]
 
 if __name__ == "__main__":
     import doctest
