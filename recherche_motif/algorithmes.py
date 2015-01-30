@@ -294,6 +294,7 @@ def prepare_table_kmp(motif):
     return tab
 
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

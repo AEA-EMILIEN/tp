@@ -1,12 +1,13 @@
 import algorithmes as algo
 import util
 
+import sys
 
 
 def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement_dic_adn):
     '''
     >>> dic = (cherche_mot_taille_N('ATATAG', 5 ))
-    >>> [(a,dic[a]) for a in sorted(dic)]
+    >>> 
     [('ATATA', 2), ('ATATC', 1), ('CTATA', 1), ('GATAT', 1), ('TATAG', 1), ('TATAT', 2)]
       
     '''
@@ -24,13 +25,19 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
             connu[(util.complement(motif,comp))] = occ
             connu[util.complement_inverse(motif,comp)] = occ
     
-    return connu
+            
+    return [(a,connu[a]) for a in sorted(connu)]
 
 
 if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
 
+    if (len(sys.argv)<2):
+        import doctest
+        doctest.testmod()
+    else:
+        f = util.open_fasta("test.fasta")
+        l = cherche_mot_taille_N(f,int(sys.argv[1]))
+        print l
 
 
  
