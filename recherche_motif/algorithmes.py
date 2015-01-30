@@ -39,7 +39,6 @@ def brute_force(motif,chaine_adn):
     len_motif = len(motif)
     indice_occ = []
     for c1 in xrange(0,len_chaine_adn-len_motif+1):  
-        '''
         for c2 in xrange(0,len_motif):
             if (chaine_adn[c1+c2]!=motif[c2]):
                 break
@@ -47,13 +46,8 @@ def brute_force(motif,chaine_adn):
                 if (c2==len_motif-1):
                     occ+=1
                     indice_occ.append(c1)
-        '''
-        if (chaine_adn[c1:len_motif+c1] == motif):
-            occ+=1
-            indice_occ.append(c1)
-        
     return occ,indice_occ
-    
+
 
 
 
@@ -151,43 +145,42 @@ def cherche_generique(motif,chaine_adn,func=brute_force):
    
     '''
 
-def generateBC(motif) :
-	size = len(motif)
+def generateBC(motif,size) :
 	listBC = {}
 	for i in range(0, size-1) :
 		listBC[motif[i]] = size-i-1
 	return listBC
 
-def generateGS(motif) :
-	size = len(motif)
+def generateGS(motif,size) :
 	listGS = {}
 	sub = ""
 	for i in range(0, size) :
-		listGS[len(sub)] = findSuffixPos(motif[size-i-1],sub,motif)
+		listGS[len(sub)] = findSuffixPos(motif[size-i-1],sub,motif,size)
 		sub = motif[size-1-i] + sub
 	return listGS
 
-def findSuffixPos(bc,suffix, motif) : 
-	for i in range(1,len(motif)+1)[::-1] :
+def findSuffixPos(bc,suffix, motif,size) : 
+	len_suffix = len(suffix)
+	for i in range(1,size+1)[::-1] :
 		find = True
-		for j in range(0,len(suffix)) :
-				end = i-len(suffix)-1+j
+		for j in range(0,len_suffix) :
+				end = i-len_suffix-1+j
 				if (end<0 or suffix[j]==motif[end]) :
 					pass
 				else :
 					find = False
-		end = i-len(suffix)-1
+		end = i-len_suffix-1
 		if find and (end<=0 or motif[end-1]!=bc) :
-			return len(motif)-i+1
+			return size-i+1
 
 def boyer_moore(motif, chaine) :
-	GS = generateGS(motif)
-	BC = generateBC(motif)
+	sizeC = len(chaine)
+	sizeM = len(motif)
+	GS = generateGS(motif,sizeM)
+	BC = generateBC(motif,sizeM)
 	indice_occ = []
 	nb_occ = 0
 	i=0
-	sizeC = len(chaine)
-	sizeM = len(motif)
 	while i<sizeC-sizeM+1 :
 		j = sizeM
 		while j>0 and motif[j-1]==chaine[i+j-1] :
@@ -196,7 +189,7 @@ def boyer_moore(motif, chaine) :
 			if chaine[i+j-1] not in BC :
 				i = i + j
 			else :
-				BCShift = BC.get(chaine[i+j-1], sizeM)-(sizeM-j)
+				BCShift = BC[chaine[i+j-1]]-(sizeM-j)
 				GSShift = GS[sizeM-j]
 				if BCShift > GSShift :
 					i = i + BCShift
