@@ -2,6 +2,9 @@ Rousé Julien
 Allart Emilie
 Duthoit Julien
 
+
+
+
 v1 - Boyer-Moore - 20/01/15 BUG
 v2 - Brute-force   22/01/15
 v1 - Rabin-Karp    23/01/15 
@@ -17,20 +20,20 @@ python util.py génére test.fasta 1e7 lignes, et test10millions.fasta 1e8 ligne
 Profiling: python -m cProfile monfichier.py arg1 arg2
 
 Test a la fac:
-brute_force m='AA' dans 1e8 : +-9sec
-brute_force m='GATACA' dans 1e8char : +-9sec
-brute_force m='GATACA' dans 1e7char : 0.316sec
+brute_force m='AA' dans 1e7 : +-9sec
+brute_force m='GATACA' dans 1e7char : +-9sec
+brute_force m='GATACA' dans 1e6char : 0.316sec
 
-boyer_moore m='AA' dans 1e8char : +-28sec
-boyer_moore m='AAAAAA' dans 1e8char : +-9sec
-boyer_moore m='AAAAAAAAAAAAAA' dans 1e8char : +-4.3sec
+boyer_moore m='AA' dans 1e7char : +-28sec
+boyer_moore m='AAAAAA' dans 1e7char : +-9sec
+boyer_moore m='AAAAAAAAAAAAAA' dans 1e7char : +-4.3sec
 
 
 
 
 Test maison JulienR:
-rabin_karp m='GATACA' dans 1e7char : +-8sec 
-rabin_karp m='GATACA' dans 1e8char : +-75sec 
+rabin_karp m='GATACA' dans 1e6char : +-8sec 
+rabin_karp m='GATACA' dans 1e7char : +-75sec 
 
 
 
@@ -40,3 +43,9 @@ TODO:
 	documentation  
 	calcul de complexité
 	optimiser en ajoutant algo? 
+	dotPlot
+
+A rendre:
+  sources commentées,
+  tests sur données reelles et simulées
+  un mini rapport decrivant notre algo de recherche
