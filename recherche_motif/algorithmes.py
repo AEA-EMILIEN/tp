@@ -134,7 +134,7 @@ def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic
     
     occ = occ_motif + occ_inv + occ_comp + occ_comp_inv
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
-    return occ, [] #sorted(indice_occ)
+    return occ, sorted(indice_occ)
     
     '''
     Implémentation de l'algorithme de Boyer-Moore
