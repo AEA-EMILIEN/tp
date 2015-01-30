@@ -39,6 +39,7 @@ def brute_force(motif,chaine_adn):
     len_motif = len(motif)
     indice_occ = []
     for c1 in xrange(0,len_chaine_adn-len_motif+1):  
+        '''
         for c2 in xrange(0,len_motif):
             if (chaine_adn[c1+c2]!=motif[c2]):
                 break
@@ -46,8 +47,13 @@ def brute_force(motif,chaine_adn):
                 if (c2==len_motif-1):
                     occ+=1
                     indice_occ.append(c1)
+        '''
+        if (chaine_adn[c1:len_motif+c1] == motif):
+            occ+=1
+            indice_occ.append(c1)
+        
     return occ,indice_occ
-
+    
 
 
 
