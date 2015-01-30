@@ -174,7 +174,7 @@ def findSuffixPos(bc,suffix, motif) :
 		if find and (end<=0 or motif[end-1]!=bc) :
 			return len(motif)-i+1
 
-def BM(chaine, motif) :
+def boyer_moore(chaine, motif) :
 	GS = generateGS(motif)
 	BC = generateBC(motif)
 	indice_occ = []
@@ -187,17 +187,22 @@ def BM(chaine, motif) :
 		while j>0 and motif[j-1]==chaine[i+j-1] :
 			j = j-1
 		if j>0 :
-			BCShift = BC.get(chaine[i+j-1], sizeM)
-			GSShift = GS[sizeM-j]
-			if BCShift > GSShift :
-				i = i + BCShift
+			if chaine[i+j-1] not in BC :
+				print i
+				i = i + j
+				print i
 			else :
-				i = i + GSShift
+				BCShift = BC.get(chaine[i+j-1], sizeM)
+				GSShift = GS[sizeM-j]
+				if BCShift > GSShift :
+					i = i + BCShift
+				else :
+					i = i + GSShift
 		else :
 			GSshift = GS[sizeM-1]
 			nb_occ = nb_occ + 1
 			indice_occ.append(i)
-			i = i + max(sizeM,GSshift)
+			i = i + GSshift
 	return nb_occ, indice_occ
 
 
