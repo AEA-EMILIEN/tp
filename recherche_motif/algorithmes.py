@@ -31,7 +31,7 @@ def brute_force(motif,chaine_adn):
     (3, [0, 5, 7])
 
 
-    .. seealso:: boyer_moore()
+    .. seealso:: boyer_moore(),kmp()
 
     '''
     occ = 0 
@@ -136,6 +136,8 @@ def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic
     indice_occ = indice_motif + indice_inv + indice_comp + indice_comp_inv
     return occ, sorted(indice_occ)
     
+
+
     '''
     Implémentation de l'algorithme de Boyer-Moore
    

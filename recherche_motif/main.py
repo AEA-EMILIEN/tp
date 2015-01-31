@@ -4,7 +4,7 @@ import sys,getopt
 
 import algorithmes as algo
 import util 
-
+import algorithmesT as algoT
 
 adn = "GATACATTCATAGCTATGTGATACAGTATC"    
 m = 'GATACA'   
@@ -93,7 +93,7 @@ def main(argv):
     chaine_adn = util.open_fasta(inputfile)
     
         
-    occ,indice_occ = algo.cherche_generique(motif,chaine_adn,algo_choisi,comp_choisi)
+    occ,indice_occ = algoT.cherche_generiqueT(motif,chaine_adn,algo_choisi,comp_choisi)
     print occ,indice_occ    
 if __name__ == "__main__":
     main(sys.argv[1:])

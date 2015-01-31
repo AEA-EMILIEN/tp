@@ -1,6 +1,6 @@
-import algorithmes as algo
+import algorithmesT as algoT
 import util
-
+import algorithmes as algo
 import sys
 
 
@@ -12,6 +12,7 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
       
     '''
     
+    algo_recherche = func 
     len_chaine_adn = len(chaine_adn)
     connu = { }
 
@@ -19,7 +20,7 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
     for i in xrange(0,len_chaine_adn-n+1):
         motif = chaine_adn[i:i+n]
         if (motif not in connu):
-            occ,_ = algo.cherche_generique(motif,chaine_adn,func,comp)
+            occ,_ = algoT.cherche_generiqueT(motif,chaine_adn,algo_recherche,comp)
             connu[motif] = occ
             connu[(util.inverse(motif))] = occ
             connu[(util.complement(motif,comp))] = occ
@@ -27,6 +28,7 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
     
             
     return [(a,connu[a]) for a in sorted(connu)]
+
 
 
 if __name__ == '__main__':
