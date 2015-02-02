@@ -63,6 +63,7 @@ def cherche_mot_N_essai(chaine_adn,n,func=algo.brute_force,comp=util.complement_
     
     
     len_chaine_adn = len(chaine_adn)
+    
 
 if __name__ == '__main__':
 
