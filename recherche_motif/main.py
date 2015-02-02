@@ -43,12 +43,14 @@ def main(argv):
     outputfile = '' 
     #si output file spécifié, nombre de char à généré
     taille = 1000000
-   
+    #Si spécifié impromme les occurences
+    print_occ = False
+
     motif = "GATACA"
     chaine_adn = '' 
 
     #chaine d'usage a afficher qd l'utilisateur se trompe/demande l'aide
-    usage = sys.argv[0]+''' -l : Affiche la liste des algos utilisables \n'''+sys.argv[0]+''' -i <inputfile> -o <outputfile> -a <algorithme> -m <motif>'''
+    usage = sys.argv[0]+''' -l : Affiche la liste des algos utilisables \n'''+sys.argv[0]+''' -i <inputfile> -o <outputfile> -a <algorithme> -m <motif> -p <print occurence>'''
    
     
     ###################################################
@@ -84,6 +86,8 @@ def main(argv):
             taille = int(arg)
         elif opt in ("-c","--complement_dic"):
             comp_choisi = comp.get(arg,util.complement_dic_adn)
+        elif opt in ("-p"):
+            print_occ=True
     ####################################################
     #fin du traitement des arguments d'appel du script#
     ###################################################
@@ -92,8 +96,10 @@ def main(argv):
         inputfile=outputfile
     chaine_adn = util.open_fasta(inputfile)
     
-        
     occ,indice_occ = algo.cherche_generique(motif,chaine_adn,algo_choisi,comp_choisi)
-    print occ,indice_occ    
+    if print_occ :    
+        print occ,indice_occ
+    else:
+        print occ
 if __name__ == "__main__":
     main(sys.argv[1:])
