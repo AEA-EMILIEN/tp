@@ -5,10 +5,9 @@ Duthoit Julien
 
 
 
-v1 - Boyer-Moore - 20/01/15 BUG
-v2 - Brute-force   22/01/15
-v1 - Rabin-Karp    23/01/15 
-v2 - Boyer-Moore - 29/01/15 juste revoir le décalage dans le cas motif trouvé
+v2 - Boyer-Moore - 30/01/15 
+v3 - Brute-force   30/01/15
+v1 - Rabin-Karp    23/01/15 trop lent, mal implementé 
 
 implémentation de boyer-moore, de la brute force, des modification des motifs
 
@@ -37,6 +36,13 @@ rabin_karp m='GATACA' dans 1e7char : +-75sec
 
 
 
+test sur tmp_JuR: sur test.fasta
+n=4 non-threadé 16sec
+        threadé 19sec...
+n=5 non-threadé 64sec
+        threadé 72sec
+
+
 TODO: 
 	test de performance
 	tests
@@ -46,6 +52,7 @@ TODO:
 	dotPlot
 
 A rendre:
+  dotplot
   sources commentées,
   tests sur données reelles et simulées
   un mini rapport decrivant notre algo de recherche
