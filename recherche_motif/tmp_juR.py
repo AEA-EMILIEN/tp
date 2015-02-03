@@ -72,7 +72,8 @@ def cherche_mot_taille_N_essai(chaine_adn,n):
             connu[motif] += 1 
         else:
             connu[motif] = 1
-    return [(a,connu[a]) for a in sorted(connu)]
+    #from operator import itemgetter
+    return [(a,connu[a]) for a in connu]#sorted(connu,key=itemgetter(0))]
 
 if __name__ == '__main__':
 
@@ -80,10 +81,11 @@ if __name__ == '__main__':
         import doctest
         doctest.testmod()
     else:
-        f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
+        f = util.open_fasta("test10millions.fasta")
+        #f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
         #l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_arn)
         l2 = cherche_mot_taille_N_essai(f,int(sys.argv[1]))
-       # print l2
+        #print l2
 
 
  

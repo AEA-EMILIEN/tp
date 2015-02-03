@@ -154,10 +154,10 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     
     '''
 
-    sample = ['A','T','G','C','\n']
+    sample = ['A','T','G','C']
     
     import random as r
-    data = [r.choice(sample) for _ in xrange(taille) ]
+    data = [r.choice(sample) if i%71 else '\n'  for i in xrange(taille) ]
     data =  desc + "".join(data)
 
     with open(filename,"w") as f:
@@ -167,7 +167,6 @@ def generate_fasta(filename='test.fasta',taille=1000000,desc='''>Un fichier fast
     return None
 
 def diff(a, b):
-	#b = set(b)
        return [aa for aa in a if aa not in b]
 
 if __name__ == "__main__":
