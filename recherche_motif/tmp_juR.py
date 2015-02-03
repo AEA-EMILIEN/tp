@@ -75,6 +75,19 @@ def cherche_mot_taille_N_essai(chaine_adn,n):
     #from operator import itemgetter
     return [(a,connu[a]) for a in connu]#sorted(connu,key=itemgetter(0))]
 
+def cherche_mot_taille_N_essai_counter(chaine_adn,n):
+    from collections import Counter
+    len_chaine_adn = len(chaine_adn)
+    connu = Counter()
+    motif = ''
+    
+    for i in xrange(0,len_chaine_adn-n+1):
+        motif = chaine_adn[i:i+n]
+        connu[motif] += 1 
+    #from operator import itemgetter
+    return connu.items()
+
+
 if __name__ == '__main__':
 
     if (len(sys.argv)<2):
