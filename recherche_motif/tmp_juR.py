@@ -19,7 +19,7 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
     for i in xrange(0,len_chaine_adn-n+1):
         motif = chaine_adn[i:i+n]
         if (motif not in connu):
-            occ,_ = algo.cherche_generique(motif,chaine_adn,algo_recherche,comp)
+            occ,_ = algoT.cherche_generiqueP(motif,chaine_adn,algo_recherche,comp)
             connu[motif] = occ
             connu[(util.inverse(motif))] = occ
             connu[(util.complement(motif,comp))] = occ
@@ -71,7 +71,9 @@ if __name__ == '__main__':
         doctest.testmod()
     else:
         f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
-        l = cherche_mot_taille_NT(f,int(sys.argv[1]),comp=util.complement_dic_arn)
+        l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_arn)
+        #f = util.open_fasta("test.fasta")
+        #l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_adn)
         print l
 
 
