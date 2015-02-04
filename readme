@@ -42,6 +42,11 @@ n=4 non-threadé 16sec
 n=5 non-threadé 64sec
         threadé 72sec
 
+test sur tmpE : sur chromosome13.fasta
+n=4 non-threadé 3.748 sec
+n=5 non-threadé 12.282 sec... 
+sur test10million.fasta
+n=4 non-threadé 471.847 seconds
 
 TODO: 
 	test de performance

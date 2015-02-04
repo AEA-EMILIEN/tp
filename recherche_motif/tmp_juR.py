@@ -20,10 +20,11 @@ def cherche_mot_taille_N(chaine_adn,n,func=algo.brute_force,comp=util.complement
         motif = chaine_adn[i:i+n]
         if (motif not in connu):
             occ,_ = algoT.cherche_generiqueP(motif,chaine_adn,algo_recherche,comp)
+            occ,_ = func(motif,chaine_adn)
             connu[motif] = occ
-            connu[(util.inverse(motif))] = occ
-            connu[(util.complement(motif,comp))] = occ
-            connu[util.complement_inverse(motif,comp)] = occ
+            #connu[(util.inverse(motif))] = occ
+            #connu[(util.complement(motif,comp))] = occ
+            #connu[util.complement_inverse(motif,comp)] = occ
     
             
     return [(a,connu[a]) for a in sorted(connu)]
@@ -59,10 +60,33 @@ def cherche_mot_taille_NT(chaine_adn,n,func=algo.brute_force,comp=util.complemen
     return [(a,connu[a]) for a in sorted(connu)]
 
 
-def cherche_mot_N_essai(chaine_adn,n,func=algo.brute_force,comp=util.complement_dic_adn):
-    
-    
+def cherche_mot_taille_N_essai(chaine_adn,n):
     len_chaine_adn = len(chaine_adn)
+    connu = {}
+    motif = ''
+    
+    for i in xrange(0,len_chaine_adn-n+1):
+        motif = chaine_adn[i:i+n]
+        
+        if motif in connu:
+            connu[motif] += 1 
+        else:
+            connu[motif] = 1
+    #from operator import itemgetter
+    return [(a,connu[a]) for a in connu]#sorted(connu,key=itemgetter(0))]
+
+def cherche_mot_taille_N_essai_counter(chaine_adn,n):
+    from collections import Counter
+    len_chaine_adn = len(chaine_adn)
+    connu = Counter()
+    motif = ''
+    
+    for i in xrange(0,len_chaine_adn-n+1):
+        motif = chaine_adn[i:i+n]
+        connu[motif] += 1 
+    #from operator import itemgetter
+    return connu.items()
+
 
 if __name__ == '__main__':
 
@@ -70,11 +94,13 @@ if __name__ == '__main__':
         import doctest
         doctest.testmod()
     else:
-        f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
-        l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_arn)
-        #f = util.open_fasta("test.fasta")
-        #l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_adn)
-        print l
+
+        f = util.open_fasta("test10millions.fasta")
+        #f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
+        #l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_arn)
+        l2 = cherche_mot_taille_N_essai(f,int(sys.argv[1]))
+        #print l2
+
 
 
  
