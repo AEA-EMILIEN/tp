@@ -6,22 +6,7 @@ import algorithmes as algo
 import util 
 import algorithmesT as algoT
 
-adn = "GATACATTCATAGCTATGTGATACAGTATC"    
-m = 'GATACA'   
 
-
-'''
-    narg = len(sys.argv) #nombre d'argument sur la ligne de commande
-    if (narg<2): #0arg supplementaire
-        adn = util.open_fasta('test.fasta')
-        occ = algo.brute_force(m,adn)
-        print occ
-    if (narg==2) :
-        filename = sys.argv[1]
-        adn = util.open_fasta(filename)
-        occ = algo.cherche_generique(m,adn)
-        print occ
-'''
 def main(argv):
     #les algos que l'utilisateur peut demander d'utiliser
     algos = {"boyer_moore":algo.boyer_moore,
@@ -35,10 +20,10 @@ def main(argv):
     comp = {"adn":util.complement_dic_adn,
             "arn":util.complement_dic_arn}
     
-    comp_choisi = util.complement_dic_adn
+    comp_choisi = comp['arn']
     
     #fichier fasta à utiliser
-    inputfile = 'test10millions.fasta'
+    inputfile = '../data/chromosome13_NT_009952.14.fasta'
     #si fichier fasta non spécifié
     outputfile = '' 
     #si output file spécifié, nombre de char à généré
@@ -46,7 +31,7 @@ def main(argv):
     #Si spécifié impromme les occurences
     print_occ = False
 
-    motif = "GATACA"
+    motif = "GAUACA"
     chaine_adn = '' 
 
     #chaine d'usage a afficher qd l'utilisateur se trompe/demande l'aide
