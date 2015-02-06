@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from pylab import *
+
+
+
+
+
+
+def graphe_performance(dic_algo_time,len_chaine_adn):
+    '''
+    :param list_performance_func: une liste  
+    '''
+
+    colors = ['b','g','r','c','m','y','k','w']
+    
+    list_key = dic_algo_time.keys()
+    
+    x = range(1,6)
+    
+    
+    xlabel("size of words")
+    ylabel("time in s")
+    title("Time for computing the occurrences of all the words \nof size n in "+str(len_chaine_adn)+" char")
+    
+    for i in xrange(len(list_key)):
+        plot(x,dic_algo_time[list_key[i]],colors[i]+'-',label=list_key[i])
+    legend()
+    show()
+    #savefig("xx.png")
+    
+ 
+   
+lat = {'brute_force':[1,2,3,4,5],'kmp':[1,4,9,16,25]}
+graphe_performance(lat,100000)
+
+
+
+
+

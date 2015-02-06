@@ -95,15 +95,60 @@ def cherche_mot_taille_N_essai(chaine_adn,n):
     len_chaine_adn = len(chaine_adn) #O(1)
     connu = {} 
     motif = ''
-    
+    t = None 
     
     for i in xrange(0,len_chaine_adn-n+1): #O(M-N)
         motif = chaine_adn[i:i+n] #O(N) 
         if motif in connu:
-            connu[motif] += 1  #O(1) en pratique, #O(P) dans le pire des cas.
+	    t = connu[motif][1]
+            connu[motif] = (connu[motif][0]+1,t+[i])  #O(1) en pratique, #O(P) dans le pire des cas.
         else:
+	    t = [i]
+            connu[motif] = (1,[i]) #O(1) en pratique, #O(P) dans le pire des cas.
+    return connu #O(4**N) dans le pire des cas.
+
+def cherche_mot_taille_N_essai2(chaine_adn,n):
+    '''
+    Calcule le nombre d'occurence de tous les mots de taille n présent dans chaine_adn.
+    
+    :param chaine_adn: La chaine dans laquelle on recherche les mots.
+    :param n: La taille des mots que l'on souhaite chercher.
+    :type chaine_adn: string
+    :type n: int
+    :return: Une liste de tuple contenant:
+             -Le mot trouvé
+             -Son nombre d'occurence.
+    :rtype: [(string,int)]
+    
+    :Exemple:
+    
+    >>> sorted(cherche_mot_taille_N_essai('AGCTCCATC',2))
+    [('AG', 1), ('AT', 1), ('CA', 1), ('CC', 1), ('CT', 1), ('GC', 1), ('TC', 2)]
+   
+ 
+    ..seealso:: 
+    ..warning:: Le nombre de mot possible est (nombre_lettre_dans_lalphabet**n) qui est ici
+                4**n. Le nombre de  mot possible augmente de manière exponentielle.
+    ..performance:: d'après: https://wiki.python.org/moin/TimeComplexity
+                    Soit M la taille de chaine_adn, N la taille des mots que l'on cherche,
+                    P le nombre de mot partageant un hash dans le dictionnaire. 
+                    (ici P=4**N dans le pire des cas, 1 le plus souvent)
+                    O(1) + O(M-N) * (O(N) + (O(P)) + (O(4**N)) ?
+    '''
+    len_chaine_adn = len(chaine_adn) #O(1)
+    connu = {} 
+    motif = ''
+    
+    
+    for i in xrange(0,len_chaine_adn-n+1): #O(M-N)
+        motif = chaine_adn[i:i+n] #O(N) 
+        try :
+            connu[motif] += 1  #O(1) en pratique, #O(P) dans le pire des cas.
+        except KeyError:
             connu[motif] = 1 #O(1) en pratique, #O(P) dans le pire des cas.
     return [(a,connu[a]) for a in connu] #O(4**N) dans le pire des cas.
+
+
 
 
 def cherche_mot_taille_N_essai_counter(chaine_adn,n):
