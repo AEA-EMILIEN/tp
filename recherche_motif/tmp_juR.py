@@ -99,7 +99,7 @@ def cherche_mot_taille_N_essai(chaine_adn,n):
     
     for i in xrange(0,len_chaine_adn-n+1): #O(M-N)
         motif = chaine_adn[i:i+n] #O(N) 
-            if motif in connu:
+        if motif in connu:
             connu[motif] += 1  #O(1) en pratique, #O(P) dans le pire des cas.
         else:
             connu[motif] = 1 #O(1) en pratique, #O(P) dans le pire des cas.
