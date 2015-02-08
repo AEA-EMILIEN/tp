@@ -161,14 +161,14 @@ def generateBC(motif,size) :
 	 {'A': 2, 'C': 1, 'T': 3, 'G': 5}
     
     '''
-	listBC = {}
-	for i in range(0, size-1) :
-		listBC[motif[i]] = size-i-1
-	return listBC
-
+    listBC = {}
+    for i in range(0, size-1) :
+        listBC[motif[i]] = size-i-1
+    return listBC
+        
   
 def generateGS(motif,size) :
-'''
+    '''
     Initialise la table des "good suffix" avec le motif de taille size
     
     :param motif: Le motif que l'on veut trier
@@ -181,18 +181,18 @@ def generateGS(motif,size) :
     :Example:
     
     >>> generateGS('GATAGATACA',10)
-	 {0: 1, 1: 2, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
+    {0: 1, 1: 2, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
 
-'''
-	listGS = {}
-	sub = ""
-	for i in range(0, size) :
-		listGS[len(sub)] = findSuffixPos(motif[size-i-1],sub,motif,size)
-		sub = motif[size-1-i] + sub
-	return listGS
+    '''
+    listGS = {}
+    sub = ""
+    for i in range(0, size) :
+        listGS[len(sub)] = findSuffixPos(motif[size-i-1],sub,motif,size)
+        sub = motif[size-1-i] + sub
+    return listGS
 
 def findSuffixPos(bc,suffix, motif,size) : 
-'''
+    '''
     Effectue la recherche du meilleur suffixe dans le motif de taille size, à partir du caractère bc
     
     :param motif: Le motif que l'on veut trier
@@ -211,22 +211,22 @@ def findSuffixPos(bc,suffix, motif,size) :
     >>>findSuffixPos('T',"GAT","GATAGATACA",10)
 	 3
 
-'''
-	len_suffix = len(suffix)
-	for i in range(1,size+1)[::-1] :
-		find = True
-		for j in range(0,len_suffix) :
-				end = i-len_suffix-1+j
-				if (end<0 or suffix[j]==motif[end]) :
-					pass
-				else :
-					find = False
-		end = i-len_suffix-1
-		if find and (end<=0 or motif[end-1]!=bc) :
-			return size-i+1
+    '''
+    len_suffix = len(suffix)
+    for i in range(1,size+1)[::-1] :
+        find = True
+        for j in range(0,len_suffix) :
+            end = i-len_suffix-1+j
+            if (end<0 or suffix[j]==motif[end]) :
+                pass
+            else :
+                find = False
+        end = i-len_suffix-1
+        if find and (end<=0 or motif[end-1]!=bc) :
+            return size-i+1
 
 def boyer_moore(motif, chaine) :
-	'''
+    '''
     Algorithme Boyer-Moore.
     
     :param motif: Le motif qu'on veut retrouver dans la chaine.
@@ -242,35 +242,35 @@ def boyer_moore(motif, chaine) :
 
 
     .. seealso:: brute_force(),kmp()
-
-	'''
-	sizeC = len(chaine)
-	sizeM = len(motif)
-	GS = generateGS(motif,sizeM)
-	BC = generateBC(motif,sizeM)
-	indice_occ = []
-	nb_occ = 0
-	i=0
-	while i<sizeC-sizeM+1 :
-		j = sizeM
-		while j>0 and motif[j-1]==chaine[i+j-1] :
-			j = j-1
-		if j>0 :
-			if chaine[i+j-1] not in BC :
-				i = i + j
-			else :
-				BCShift = BC[chaine[i+j-1]]-(sizeM-j)
-				GSShift = GS[sizeM-j]
-				if BCShift > GSShift :
-					i = i + BCShift
-				else :
-					i = i + GSShift
-		else :
-			GSshift = GS[sizeM-1]
-			nb_occ = nb_occ + 1
-			indice_occ.append(i)
-			i = i + GSshift
-	return nb_occ, indice_occ
+    
+    '''
+    sizeC = len(chaine)
+    sizeM = len(motif)
+    GS = generateGS(motif,sizeM)
+    BC = generateBC(motif,sizeM)
+    indice_occ = []
+    nb_occ = 0
+    i=0
+    while i<sizeC-sizeM+1 :
+        j = sizeM
+        while j>0 and motif[j-1]==chaine[i+j-1] :
+            j = j-1
+        if j>0 :
+            if chaine[i+j-1] not in BC :
+                i = i + j
+            else :
+                BCShift = BC[chaine[i+j-1]]-(sizeM-j)
+                GSShift = GS[sizeM-j]
+                if BCShift > GSShift :
+                    i = i + BCShift
+                else :
+                    i = i + GSShift
+        else :
+            GSshift = GS[sizeM-1]
+            nb_occ = nb_occ + 1
+            indice_occ.append(i)
+            i = i + GSshift
+    return nb_occ, indice_occ
 
 
 def kmp(motif,chaine_adn):

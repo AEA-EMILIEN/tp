@@ -174,7 +174,7 @@ if __name__ == '__main__':
         #f = util.open_fasta("test10millions.fasta")
         f = util.open_fasta("../data/chromosome13_NT_009952.14.fasta")
         #l = cherche_mot_taille_N(f,int(sys.argv[1]),comp=util.complement_dic_arn)
-        l2 = cherche_mot_taille_N_essai(f,int(sys.argv[1]))
+        l2 = cherche_mot_taille_N_essai2(f,int(sys.argv[1]))
         print l2
 
 
