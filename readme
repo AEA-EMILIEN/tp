@@ -3,6 +3,7 @@ Allart Emilie
 Duthoit Julien
 
 
+rajouter export PYTHONPATH=$PYTHONPATH:$HOME/chemin/vers/aea/tp/ dans le ~/.bashrc
 
 
 v2 - Boyer-Moore - 30/01/15 
