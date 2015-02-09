@@ -65,7 +65,7 @@ def simule_premiARN(filename="random_premiARN",
     #=================================
 
     
-    return chaine,chaine2
+    return chaine,chaine2,len_chaine,moitie,moitie2
 
 def complement(motif,dic=complement_dic_arn_2):
     aa = 'AUGC'
@@ -94,4 +94,8 @@ def non_complement(motif,dic=complement_dic_arn_2):
 
 #print non_complement('UAGC',complement_dic_arn_2)
 #print complement('UUUU')
-print simule_premiARN()
+c1,c2,l,m,m2  = simule_premiARN()
+print c1,l
+print m
+print m2[::1]
+print c2
