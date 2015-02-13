@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+from math import floor
 
 from recherche_motif import util
 
@@ -13,11 +14,12 @@ complement_dic_arn_2 = {'A':'U',
 
 
 def simule_premiARN(filename="random_premiARN",
-                    len_min_boucle = 3,
+                    len_min_boucle = 0,
                     len_max_boucle = 8,
                     len_min_premiARN = 70, 
                     len_max_premiARN = 100,
-                    nb_min_appariement = 24):
+                    nb_min_appariement = 24,
+                    nb_min_miniboucle = 0):
     '''
     Fonction simulant un pré_miARN
     
@@ -63,7 +65,12 @@ def simule_premiARN(filename="random_premiARN",
     #=================================
     #|étape 3:inserer des miniboucles|
     #=================================
-
+    nb_max_miniboucle = len_max_premiARN -(len_boucle + len_chaine)
+    nb_max_miniboucle = int(floor(nb_max_miniboucle/3))
+    
+    nb_miniboucle = random.randin(nb_min_miniboucle,nb_max_miniboucle)
+    
+    
     
     return chaine,chaine2,len_chaine,moitie,moitie2
 
