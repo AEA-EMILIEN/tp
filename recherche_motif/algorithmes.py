@@ -144,23 +144,23 @@ def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic
     '''
 
 def generateBC(motif,size) :
-    '''
-    Initialise la table des "bad characters" avec le motif de taille size
-    
-    :param motif: Le motif que l'on veut trier
+	'''
+	Initialise la table des "bad characters" avec le motif de taille size
+
+	:param motif: Le motif que l'on veut trier
 	 :param size: la taille du motif
-    :type motif: string
+	:type motif: string
 	 :type size: int
-    :return: Le tableau BC
-    :rtype: dict
-    
-    
-    :Example:
-    
-    >>> generateBC('GATACA')
-	 {'A': 2, 'C': 1, 'T': 3, 'G': 5}
-    
-    '''
+	:return: Le tableau BC
+	:rtype: dict
+
+
+	:Example:
+
+	>>> generateBC('GATACA',6)
+	{'A': 2, 'C': 1, 'T': 3, 'G': 5}
+
+	'''
 	listBC = {}
 	for i in range(0, size-1) :
 		listBC[motif[i]] = size-i-1
@@ -168,22 +168,22 @@ def generateBC(motif,size) :
 
   
 def generateGS(motif,size) :
-'''
-    Initialise la table des "good suffix" avec le motif de taille size
-    
-    :param motif: Le motif que l'on veut trier
-	 :param size: la taille du motif
-    :type motif: string
-	 :type size: int
-    :return: Le tableau GS
-    :rtype: dict
-    
-    :Example:
-    
-    >>> generateGS('GATAGATACA',10)
-	 {0: 1, 1: 2, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
+	'''
+	Initialise la table des "good suffix" avec le motif de taille size
+	    
+	:param motif: Le motif que l'on veut trier
+	:param size: la taille du motif
+	:type motif: string
+	:type size: int
+	:return: Le tableau GS
+	:rtype: dict
+	    
+	:Example:
+	  
+	>>> generateGS('GATAGATACA',10)
+	{0: 1, 1: 2, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10}
 
-'''
+	'''
 	listGS = {}
 	sub = ""
 	for i in range(0, size) :
@@ -192,26 +192,26 @@ def generateGS(motif,size) :
 	return listGS
 
 def findSuffixPos(bc,suffix, motif,size) : 
-'''
-    Effectue la recherche du meilleur suffixe dans le motif de taille size, à partir du caractère bc
-    
-    :param motif: Le motif que l'on veut trier
-	 :param size: la taille du motif
-	 :param suffix: la sous-chaine que l'on recherche 
-	 :param bc: le caractère qui n'a pas était reconnu
-    :type motif: string
-	 :type size: int
-	 :type suffix: string
-	 :type bc: string
-    :return: Le décalage à faire pour retomber sur une repetition de la sous-chaine (entière ou en partie)
-    :rtype: int
-    
-    :Example:
-    
-    >>>findSuffixPos('T',"GAT","GATAGATACA",10)
-	 3
+	'''
+	Effectue la recherche du meilleur suffixe dans le motif de taille size, à partir du caractère bc
 
-'''
+	:param motif: Le motif que l'on veut trier
+	:param size: la taille du motif
+	:param suffix: la sous-chaine que l'on recherche 
+	:param bc: le caractère qui n'a pas était reconnu
+	:type motif: string
+	:type size: int
+	:type suffix: string
+	:type bc: string
+	:return: Le décalage à faire pour retomber sur une repetition de la sous-chaine (entière ou en partie)
+	:rtype: int
+
+	:Example:
+
+	>>> findSuffixPos('T',"GAT","GATAGATACA",10)
+	3
+
+	'''
 	len_suffix = len(suffix)
 	for i in range(1,size+1)[::-1] :
 		find = True
@@ -227,21 +227,21 @@ def findSuffixPos(bc,suffix, motif,size) :
 
 def boyer_moore(motif, chaine) :
 	'''
-    Algorithme Boyer-Moore.
-    
-    :param motif: Le motif qu'on veut retrouver dans la chaine.
-    :param chaine_adn: La chaine dans laquelle on fait la recherche de motif.
-    :type motif: string
-    :type chaine: string
-    :return: Le nombre d'occurence du motif et le tableau d'indice des occurences
-    
-    :Exemple:
-    
-    >>> boyer_moore('AT','ATTTTATATTTA')
-    (3, [0, 5, 7])
+	Algorithme Boyer-Moore.
+	    
+	:param motif: Le motif qu'on veut retrouver dans la chaine.
+	:param chaine_adn: La chaine dans laquelle on fait la recherche de motif.
+	:type motif: string
+	:type chaine: string
+	:return: Le nombre d'occurence du motif et le tableau d'indice des occurences
+	    
+	:Exemple:
+	    
+	>>> boyer_moore('AT','ATTTTATATTTA')
+	(3, [0, 5, 7])
 
 
-    .. seealso:: brute_force(),kmp()
+	... seealso:: brute_force(),kmp()
 
 	'''
 	sizeC = len(chaine)
