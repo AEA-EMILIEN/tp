@@ -12,7 +12,7 @@ Modules contenant nos implémentations des algorithmes de recherche de motifs da
 '''
 
 import util 
-
+from joblib import Parallel,delayed
 
 
 def brute_force(motif,chaine_adn):
@@ -137,6 +137,22 @@ def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic
     return occ, sorted(indice_occ)
     
 
+def cherche_generiqueT(motif,chaine_adn,func=brute_force,comp=util.complement_dic_adn):
+    '''
+    Fait une recherche de motif,inverse,complement,complement-inverse
+    dans une chaine avec une fonction passe en parametre threadée.
+    Si aucune fonction n'est précisée, brute force est utilisé.
+ 
+    '''
+    l = [motif, util.inverse(motif),util.complement(motif,comp),util.complement_inverse(motif,comp)]
+    res = Parallel(n_jobs=4)(delayed(func)(m,chaine_adn) for m in l)
+    print res
+    indice_occG = []
+    for r in res :
+    	occG += r[occ] 
+    	indice_occG.append(r[indice_occ]) 
+    return occG, sorted(indice_occ)
+    
 
     '''
     Implémentation de l'algorithme de Boyer-Moore
@@ -151,7 +167,6 @@ def generateBC(motif,size) :
 	 :param size: la taille du motif
 	:type motif: string
 	 :type size: int
-<<<<<<< HEAD
 	:return: Le tableau BC
 	:rtype: dict
 
@@ -272,7 +287,9 @@ def boyer_moore(motif, chaine) :
 			indice_occ.append(i)
 			i = i + GSshift
 	return nb_occ, indice_occ
-=======
+    
+def generateBC(motif) :
+    '''
     :return: Le tableau BC
     :rtype: dict
     
