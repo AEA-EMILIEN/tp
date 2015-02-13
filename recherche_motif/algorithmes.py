@@ -296,8 +296,8 @@ def generateBC(motif) :
     
     :Example:
     
-    >>> generateBC('GATACA')
-	 {'A': 2, 'C': 1, 'T': 3, 'G': 5}
+    >>> generateBC('GATACA',6)
+    {'A': 2, 'C': 1, 'T': 3, 'G': 5}
     
     '''
     listBC = {}
@@ -347,8 +347,8 @@ def findSuffixPos(bc,suffix, motif,size) :
     
     :Example:
     
-    >>>findSuffixPos('T',"GAT","GATAGATACA",10)
-	 3
+    >>> findSuffixPos('T',"GAT","GATAGATACA",10)
+    3
 
     '''
     len_suffix = len(suffix)
