@@ -138,35 +138,31 @@ def cherche_generique(motif,chaine_adn,func=brute_force,comp=util.complement_dic
     
 
 def cherche_generiqueT(motif,chaine_adn,func=brute_force,comp=util.complement_dic_adn):
-    '''
-    Fait une recherche de motif,inverse,complement,complement-inverse
-    dans une chaine avec une fonction passe en parametre threadée.
-    Si aucune fonction n'est précisée, brute force est utilisé.
- 
-    '''
-    l = [motif, util.inverse(motif),util.complement(motif,comp),util.complement_inverse(motif,comp)]
-    res = Parallel(n_jobs=4)(delayed(func)(m,chaine_adn) for m in l)
-    print res
-    indice_occG = []
-    for r in res :
-    	occG += r[occ] 
-    	indice_occG.append(r[indice_occ]) 
-    return occG, sorted(indice_occ)
+   	
+	l = [motif, util.inverse(motif),util.complement(motif,comp),util.complement_inverse(motif,comp)]
+	res = Parallel(n_jobs=4)(delayed(func)(m,chaine_adn) for m in l)
+	print res
+	occ = 0
+	indice_occ = []
+	for r in res :
+	   occ += r[0]
+	   indice_occ += r[1]
+	print occ
+	print indice_occ
+	return occ, sorted(indice_occ)
     
-
-    '''
-    Implémentation de l'algorithme de Boyer-Moore
-   
-    '''
+	'''
+	Implémentation de l'algorithme de Boyer-Moore
+	'''
 
 def generateBC(motif,size) :
 	'''
 	Initialise la table des "bad characters" avec le motif de taille size
 
 	:param motif: Le motif que l'on veut trier
-	 :param size: la taille du motif
+	:param size: la taille du motif
 	:type motif: string
-	 :type size: int
+	:type size: int
 	:return: Le tableau BC
 	:rtype: dict
 
