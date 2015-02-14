@@ -141,14 +141,14 @@ def cherche_generiqueT(motif,chaine_adn,func=brute_force,comp=util.complement_di
    	
 	l = [motif, util.inverse(motif),util.complement(motif,comp),util.complement_inverse(motif,comp)]
 	res = Parallel(n_jobs=4)(delayed(func)(m,chaine_adn) for m in l)
-	print res
+	#print res
 	occ = 0
 	indice_occ = []
 	for r in res :
 	   occ += r[0]
 	   indice_occ += r[1]
-	print occ
-	print indice_occ
+	#print occ
+	#print indice_occ
 	return occ, sorted(indice_occ)
     
 	'''

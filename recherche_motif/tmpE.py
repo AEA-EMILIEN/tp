@@ -3,13 +3,14 @@
 
 import algorithmes as algo
 import numpy as np 
+import util
 
 ''' 
 	recherche dans fasta toutes les occurences de mots de taille n
 	retourne le tableau des occurences
 '''
 
-def rechercheN (fasta,n) :
+def rechercheN (fasta,n,dic = util.complement_dic_adn) :
 	size = len(fasta)
 	matrice = np.empty(size)
 	matrice.fill(np.nan)
@@ -17,11 +18,8 @@ def rechercheN (fasta,n) :
 	old_i = 0
 	occ = np.zeros(size)
 	while (i <= size-n) :
-		#print i
 		#lance la recherche et met à 1 dans la matrice ce que l'on a déjà compté
-		occ_alt,tab = algo.cherche_generique(fasta[i:i+n],fasta)
-		#print "nb occurence de ",i," est ",occ_alt
-		#print tab
+		occ_alt,tab = algo.cherche_generiqueT(fasta[i:i+n],fasta,comp=dic)
 		for t in tab :
 			matrice[t] = 1
 		#print matrice
@@ -37,6 +35,7 @@ def first (matrice,indice,end) :
 			return i
 	return end
 	
-
-
+if __name__ == "__main__" :
+	fasta = util.open_fasta("test10millions.fasta")
+	occ = rechercheN(fasta,4)
 
