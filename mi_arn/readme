@@ -1,4 +1,26 @@
+20/02
 
-faire une dotplot sur miarn ac reverse complement
-n=4, n=6
+TODO :
+	*** 1 ***
+	Simultaur de preMIARN
 
+	Test : faire une dotplot sur miARN ac reverse complement
+	n=4, n=6
+
+	*** 2 ***
+	Lister tous les miARN possibles d'un preMIARN
+
+	*** 3 ***
+	Algorithme pour rechercher tous les preMIARN d'une séquence
+		retournant le nombre et leur position
+
+	*** 4 ***
+	Algorithme d'hybridation
+		filtre BLAST
+		Needlemab and Wunsch
+
+	*** 5 ***
+	Dans le chromosome13:
+		rechercher tous les preMIARN
+		en déterminer tous les miARN (24 pour chaque preMIARN)
+		pour tous ARNm chercher celui qui s'hybride avec un des miARN
