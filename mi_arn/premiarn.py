@@ -33,16 +33,144 @@ def N_W(u,v) :
 	max_ind = (-1,-1)
 	Del = -1
 	Ins = -1
-	for cpt_u in range(1,len_u+1) :
-		for cpt_v in range(1,len_v+1) :
-			sub = matx[cpt_u-1,cpt_v-1] + Sub(u[cpt_u-1],v[cpt_v-1]) 
-			dele = matx[cpt_u-1,cpt_v] + Del
-			ins = matx[cpt_u,cpt_v-1] + Ins
-			matx[cpt_u,cpt_v] = max(sub, ins, dele, 0)
-			if matx[cpt_u,cpt_v] > max_val :
-				max_val = matx[cpt_u,cpt_v]
-				max_ind = (cpt_u,cpt_v)
+	for app_u in range(1,len_u+1) :
+		for app_v in range(1,len_v+1) :
+			sub = matx[app_u-1,app_v-1] + Sub(u[app_u-1],v[app_v-1]) 
+			dele = matx[app_u-1,app_v] + Del
+			ins = matx[app_u,app_v-1] + Ins
+			matx[app_u,app_v] = max(sub, ins, dele, 0)
+			if matx[app_u,app_v] > max_val :
+				max_val = matx[app_u,app_v]
+				max_ind = (app_u,app_v)
 	return max_val, max_ind, matx
 
 
+def recherche_premiarn(chr, size=70) :
+	max_val = -1
+	max_ind = (-1,-1)
+	matx = []
+	p = -1
+	l = []
+	for i in range(len(chr)-size) :
+		part = chr[i:i+size]
+		for j in range(23) :
+			max_p, max_ind_p, matx_p = N_W(part[0:24+j], part[24+j+1:size])
+			if (max_p > max_val) and (test(max_ind_p,matx_p)) :
+				p = i
+				max_val = max_p
+				max_ind = max_ind_p
+				matx = matx_p
+		if (max_val != -1) :
+			l.append(chr[p:p+size])
+	return l
 
+def test(max_ind, matx) :
+	cpt_app = 0
+	app_u = 0
+	app_v = 0
+	cpt_del = 0
+	cpt_ins = 0
+	gde_boucle = false
+	gde_b_courante = false
+
+	tmp = max_ind
+	
+	while (tmp[1] != 0 or tmp[2] != 0) :
+		try :
+			maxi = max(matx[tmp[1],tmp[2]-1], matx[tmp[1]-1,tmp[2]], matx[tmp[1]-1,tmp[2]-1])
+			
+			if maxi == matx[tmp[1]-1,tmp[2]-1] : # sub
+				if  matx[tmp[1],tmp[2]] - matx[tmp[1]-1,tmp[2]-1] == 2 : # MATCH
+					cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante = match(cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante)
+				else : #MISMATCH
+					cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante = ins(cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante)
+					cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante = dele(cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante)
+			elif maxi == matx[tmp[1]-1,tmp[2]] : #ins
+				cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante = ins(cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante)
+		
+			elif maxi == matx[tmp[1],tmp[2]-1] : #del
+				cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante = dele(cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante)
+		
+		except MyException :
+			return False
+	return True
+
+class MyException(Exception):
+	pass
+
+def dele( cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante) :
+	if app_v >= 3 :
+		cpt_del += 1
+		app_v = 0
+		return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+	else :
+		if cpt_del == 0 :
+			raise MyException()
+		else : 
+			if cpt_del < 3 :
+				cpt_del += 1
+				return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+			else : 
+				if not gde_boucle :
+					if not gde_b_courante :
+						raise MyException()
+					else :
+						cpt_del += 1
+				else : 
+					if cpt_app < 24 :
+						raise MyException()
+					else :
+						gde_boucle = True
+						gde_b_courante = True
+						cpt_del += 1
+						return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+
+def ins( cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante) :
+	if app_u >= 3 :
+		cpt_ins += 1
+		app_u = 0
+		return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+	else :
+		if cpt_ins == 0 :
+			raise MyException()
+		else : 
+			if cpt_ins < 3 :
+				cpt_ins += 1
+				return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+			else : 
+				if not gde_boucle :
+					if not gde_b_courante :
+						raise MyException()
+					else :
+						cpt_ins += 1
+				else : 
+					if cpt_app < 24 :
+						raise MyException()
+					else :
+						gde_boucle = True
+						gde_b_courante = True
+						cpt_ins += 1
+						return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
+
+def match (cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante) :
+	if gde_b_courante :
+		gde_b_courante = False
+	if app_u>0 and app_v>0 :
+		app_u += 1
+		app_v += 1
+		cpt_app += 1
+	elif app_u>0 and app_v==0 :
+		cpt_del = 0
+		app_u += 1
+		app_v =+ 1
+		cpt_app += 1
+	elif app_u==0 and app_v>0 :
+		cpt_ins = 0
+		app_u += 1
+		app_v += 1
+	else :
+		cpt_ins = 0
+		cpt_del = 0
+		app_u += 1
+		app_v += 1
+	return cpt_app,app_u,app_v,cpt_ins,cpt_del,gde_boucle,gde_b_courante
