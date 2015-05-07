@@ -1,14 +1,17 @@
 import numpy as np
 
+# Dictionnaire utilisé pour les ARNs
 complement_dic_arn_2 = {'A':'U',
     'U':('A','G'),
     'G':('C','U'),
     'C':'G'}
 	 
+# Dictionnaire utilisé pour l'ADN
 complement_dic_adn = {'A':'T',
     'T':'A',
     'G':'C',
     'C':'G'}
+
 
 def Sub(m1, m2,dic=complement_dic_adn) :
 	comp = dic[m1]
@@ -46,6 +49,11 @@ def N_W(u,v) :
 
 
 def recherche_premiarn(chr, size=70) :
+	'''
+		Fait la recherche de premiarn uniquement de taille 70.
+		Sinon il faudrait le faire de 70 à 100
+		Retourne la liste des premiarns trouvés
+	'''
 	max_val = -1
 	max_ind = (-1,-1)
 	matx = []
@@ -55,7 +63,10 @@ def recherche_premiarn(chr, size=70) :
 		part = chr[i:i+size]
 		for j in range(23) :
 			max_p, max_ind_p, matx_p = N_W(part[0:24+j], part[24+j+1:size])
+			# teste où se situe la grande boucle de la portion du chromosme en cherchant la meilleur complémentarité
+			
 			if (max_p > max_val) and (test(max_ind_p,matx_p)) :
+			# si on obtient un meilleur score qu'auparavant et qu'il correspond au critère d'un premiARN
 				p = i
 				max_val = max_p
 				max_ind = max_ind_p
@@ -65,6 +76,9 @@ def recherche_premiarn(chr, size=70) :
 	return l
 
 def test(max_ind, matx) :
+	'''
+		Fait la remonter de la matrice obtenue par N_W pour voir si c'est bien un premiARN ou non
+	'''
 	cpt_app = 0
 	app_u = 0
 	app_v = 0

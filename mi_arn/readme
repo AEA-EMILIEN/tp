@@ -1,6 +1,10 @@
 20/02
+Emilie Allart
+Julien Rousse
 
-TODO :
+**********************************************************************
+	IDEE
+
 	*** 1 ***
 	Simultaur de preMIARN
 
@@ -23,4 +27,21 @@ TODO :
 	Dans le chromosome13:
 		rechercher tous les preMIARN
 		en déterminer tous les miARN (24 pour chaque preMIARN)
-		pour tous ARNm chercher celui qui s'hybride avec un des miARN
+		pour tous ARNm chercher celui qui s'hybride avec un des miARNs
+
+************************************************************************
+	CE QUI EST FAIT
+
+	simulation.py : Génère aléatoirement un premiARN
+
+	premiarn.py : Teste l'existence d'un premiARN dans un chromosome
+
+		En partant du début, on prend un morceau du chromosome de taille 70 (par la suite il faut traiter la taille de 70 à 100), on regarde via N_W si il y a des hybrides dans le reste du chromosome. 
+		Des morceaux obtenus, on regarde s'il contient un premiARN, dans ce cas on le renvoie . Pour se faire, on se base sur un état qui change selon une insertion, une délétion , un mismatch ou un match.
+
+	Suite à un manque de temps nous n'avons pas pu aboutir à la fin du projet
+**************************************************************************
+	CE QUI EST A FAIRE
+
+	tester via hybridation si un des premiARN conccorde avce l'ARNm
+	
