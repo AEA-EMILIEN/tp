@@ -1,64 +1,15 @@
 Rousé Julien
 Allart Emilie
-Duthoit Julien
+
 
 
 rajouter export PYTHONPATH=$PYTHONPATH:$HOME/chemin/vers/aea/tp/ dans le ~/.bashrc
 
 
-v2 - Boyer-Moore - 30/01/15 
-v3 - Brute-force   30/01/15
-v1 - Rabin-Karp    23/01/15 trop lent, mal implementé 
-
-implémentation de boyer-moore, de la brute force, des modification des motifs
-
-
-Pour générer du fasta:
-python util.py génére test.fasta 1e7 lignes, et test10millions.fasta 1e8 lignes,
-
-
 Profiling: python -m cProfile monfichier.py arg1 arg2
 
-Test a la fac:
-brute_force m='AA' dans 1e7 : +-9sec
-brute_force m='GATACA' dans 1e7char : +-9sec
-brute_force m='GATACA' dans 1e6char : 0.316sec
-
-boyer_moore m='AA' dans 1e7char : +-28sec
-boyer_moore m='AAAAAA' dans 1e7char : +-9sec
-boyer_moore m='AAAAAAAAAAAAAA' dans 1e7char : +-4.3sec
 
 
+Voici les deux tp de AEA, recherche motif couvre le premier tp et mi_arn couvre le second.
 
-
-Test maison JulienR:
-rabin_karp m='GATACA' dans 1e6char : +-8sec 
-rabin_karp m='GATACA' dans 1e7char : +-75sec 
-
-
-
-test sur tmp_JuR: sur test.fasta
-n=4 non-threadé 16sec
-        threadé 19sec...
-n=5 non-threadé 64sec
-        threadé 72sec
-
-test sur tmpE : sur chromosome13.fasta
-n=4 non-threadé 3.748 sec
-n=5 non-threadé 12.282 sec... 
-sur test10million.fasta
-n=4 non-threadé 471.847 seconds
-
-TODO: 
-	test de performance
-	tests
-	documentation  
-	calcul de complexité
-	optimiser en ajoutant algo? 
-	dotPlot
-
-A rendre:
-  dotplot
-  sources commentées,
-  tests sur données reelles et simulées
-  un mini rapport decrivant notre algo de recherche
+Les deux tp possédent leurs readme respectif.

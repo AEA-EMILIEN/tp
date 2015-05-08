@@ -31,5 +31,5 @@ def generate_plot(chaine,n) :
 	plt.show()
 
 if __name__ == "__main__" :
-	fasta = util.open_fasta("test50.fasta")
+	fasta = util.open_fasta('../data/chromosome13_NT_009952.14.fasta')
 	generate_plot(fasta,5)

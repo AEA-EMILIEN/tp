@@ -1,0 +1,23 @@
+Julien Rousé
+Emilie Allart
+
+Tp recherche de motif:
+
+
+pour lancer le programme: 
+python main.py
+
+
+pour avoir de l'aide sur les commandes:
+python main.py -h
+
+Il y a la possibilité de donner vous même votre fichier fasta a utilisé, choisir quel algorithme utiliser, et quel motif chercher.
+
+Aussi, si vous utilisez un fichier qui utilise de l'arn plutot que de l'adn, vous dever le spécifier avec  -c adn ou -c arn
+
+Algorithmes:
+
+Nous avons implémenté l'algorithme naif pour la recherche, également Boyer More, Rabin-Karp ( et KMP mais KMP a des performances très en dessous de no attentes donc je pense qu'il y a une erreur dans notre implémentation)
+
+Autre chose, l'algo naif reste très performant par rapport aux autres, voir des fois c'est le plus performant, donc peut être notre implémentation de Rabin Karp et Boyer Moore n'est pas adapté à Python.
+
